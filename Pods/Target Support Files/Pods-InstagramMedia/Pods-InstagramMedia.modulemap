@@ -1,0 +1,6 @@
+framework module Pods_InstagramMedia {
+  umbrella header "Pods-InstagramMedia-umbrella.h"
+
+  export *
+  module * { export * }
+}

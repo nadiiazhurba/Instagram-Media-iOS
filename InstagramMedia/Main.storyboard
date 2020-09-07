@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16097.3" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="eDa-zF-CEc">
+    <device id="retina4_0" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="collection view cell content view" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--Main View Controller-->
+        <scene sceneID="fST-C1-ceg">
+            <objects>
+                <viewController storyboardIdentifier="MainView" id="eDa-zF-CEc" customClass="MainViewController" customModule="InstagramMedia" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="EfE-iU-paq">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="9Fb-oT-MWL">
+                                <rect key="frame" x="0.0" y="62" width="320" height="506"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                <collectionViewFlowLayout key="collectionViewLayout" automaticEstimatedItemSize="YES" minimumLineSpacing="10" minimumInteritemSpacing="10" id="Q1O-9S-4f9">
+                                    <size key="itemSize" width="100" height="100"/>
+                                    <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                                    <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                                    <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                </collectionViewFlowLayout>
+                                <cells>
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="cellId" id="PAI-Zw-PYB" customClass="MediaCollectionViewCell" customModule="InstagramMedia" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="0.0" width="100" height="100"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="fcB-Gg-jip">
+                                            <rect key="frame" x="0.0" y="0.0" width="100" height="100"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="eIb-9u-uDa">
+                                                    <rect key="frame" x="0.0" y="0.0" width="100" height="100"/>
+                                                </imageView>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstAttribute="bottom" secondItem="eIb-9u-uDa" secondAttribute="bottom" id="AR3-CQ-P7e"/>
+                                                <constraint firstItem="eIb-9u-uDa" firstAttribute="top" secondItem="fcB-Gg-jip" secondAttribute="top" id="W0U-MO-N8u"/>
+                                                <constraint firstAttribute="trailing" secondItem="eIb-9u-uDa" secondAttribute="trailing" id="h12-Cv-SkG"/>
+                                                <constraint firstItem="eIb-9u-uDa" firstAttribute="leading" secondItem="fcB-Gg-jip" secondAttribute="leading" id="mCO-Qn-uR7"/>
+                                            </constraints>
+                                        </collectionViewCellContentView>
+                                        <connections>
+                                            <outlet property="Image" destination="eIb-9u-uDa" id="B9Y-Z0-D3h"/>
+                                        </connections>
+                                    </collectionViewCell>
+                                </cells>
+                                <connections>
+                                    <outlet property="dataSource" destination="eDa-zF-CEc" id="ZyW-pg-LY9"/>
+                                    <outlet property="delegate" destination="eDa-zF-CEc" id="jtr-tc-TdZ"/>
+                                </connections>
+                            </collectionView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bct-Le-7XS">
+                                <rect key="frame" x="32" y="16" width="88" height="30"/>
+                                <accessibility key="accessibilityConfiguration" label="authenticate"/>
+                                <state key="normal" title="Authenticate"/>
+                                <connections>
+                                    <action selector="authenticate:" destination="eDa-zF-CEc" eventType="touchUpInside" id="T3U-Yb-F4v"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Cab-Id-wR5">
+                                <rect key="frame" x="203" y="16" width="85" height="30"/>
+                                <accessibility key="accessibilityConfiguration" label="fetchMedia"/>
+                                <state key="normal" title="Fetch Media"/>
+                                <connections>
+                                    <action selector="fetchMedia:" destination="eDa-zF-CEc" eventType="touchUpInside" id="jZA-xT-7mx"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <constraints>
+                            <constraint firstItem="9Fb-oT-MWL" firstAttribute="top" secondItem="Cab-Id-wR5" secondAttribute="bottom" constant="16" id="786-BM-7Jm"/>
+                            <constraint firstItem="bct-Le-7XS" firstAttribute="leading" secondItem="CJX-ZN-lbw" secondAttribute="leading" constant="32" id="7eh-XL-eJ1"/>
+                            <constraint firstItem="CJX-ZN-lbw" firstAttribute="trailing" secondItem="9Fb-oT-MWL" secondAttribute="trailing" id="Ckf-lu-clE"/>
+                            <constraint firstItem="CJX-ZN-lbw" firstAttribute="bottom" secondItem="9Fb-oT-MWL" secondAttribute="bottom" id="E7K-Ed-nQk"/>
+                            <constraint firstItem="Cab-Id-wR5" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="bct-Le-7XS" secondAttribute="trailing" constant="16" id="VDd-iu-zCe"/>
+                            <constraint firstItem="bct-Le-7XS" firstAttribute="top" secondItem="CJX-ZN-lbw" secondAttribute="top" constant="16" id="VhM-Wm-C0c"/>
+                            <constraint firstItem="9Fb-oT-MWL" firstAttribute="leading" secondItem="CJX-ZN-lbw" secondAttribute="leading" id="Xdx-1V-0Xb"/>
+                            <constraint firstItem="Cab-Id-wR5" firstAttribute="top" secondItem="CJX-ZN-lbw" secondAttribute="top" constant="16" id="k7p-31-DsM"/>
+                            <constraint firstItem="CJX-ZN-lbw" firstAttribute="trailing" secondItem="Cab-Id-wR5" secondAttribute="trailing" constant="32" id="ktO-hw-oRe"/>
+                            <constraint firstItem="9Fb-oT-MWL" firstAttribute="top" secondItem="bct-Le-7XS" secondAttribute="bottom" constant="16" id="naq-RS-ILk"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="CJX-ZN-lbw"/>
+                    </view>
+                    <connections>
+                        <outlet property="authBtn" destination="bct-Le-7XS" id="Uew-mm-F2k"/>
+                        <outlet property="collectionView" destination="9Fb-oT-MWL" id="xQX-16-rvw"/>
+                        <outlet property="fetchMediaBtn" destination="Cab-Id-wR5" id="ZYu-wU-S6b"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="B0f-5f-SR7" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="960" y="575.70422535211264"/>
+        </scene>
+        <!--Web View Controller-->
+        <scene sceneID="Zyg-I9-VFY">
+            <objects>
+                <viewController storyboardIdentifier="webView" id="I3P-zn-vd7" customClass="WebViewController" customModule="InstagramMedia" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="zd1-TF-RfY">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <wkWebView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Vd0-As-QTx">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                                <color key="backgroundColor" red="0.36078431370000003" green="0.38823529410000002" blue="0.4039215686" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <wkWebViewConfiguration key="configuration">
+                                    <audiovisualMediaTypes key="mediaTypesRequiringUserActionForPlayback" none="YES"/>
+                                    <wkPreferences key="preferences"/>
+                                </wkWebViewConfiguration>
+                            </wkWebView>
+                        </subviews>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <constraints>
+                            <constraint firstItem="Vd0-As-QTx" firstAttribute="top" secondItem="hSU-rw-pfZ" secondAttribute="top" id="38M-td-RWg"/>
+                            <constraint firstItem="hSU-rw-pfZ" firstAttribute="trailing" secondItem="Vd0-As-QTx" secondAttribute="trailing" id="Og7-ah-Zt0"/>
+                            <constraint firstItem="hSU-rw-pfZ" firstAttribute="bottom" secondItem="Vd0-As-QTx" secondAttribute="bottom" id="QnH-pD-9V5"/>
+                            <constraint firstItem="Vd0-As-QTx" firstAttribute="leading" secondItem="hSU-rw-pfZ" secondAttribute="leading" id="fSx-g1-dWB"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="hSU-rw-pfZ"/>
+                    </view>
+                    <connections>
+                        <outlet property="webView" destination="Vd0-As-QTx" id="z2K-2m-sif"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Guf-GG-t4j" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1666" y="576"/>
+        </scene>
+    </scenes>
+</document>
