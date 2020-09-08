@@ -216,7 +216,7 @@ class InstagramApi {
             }
             myGroup.notify(queue: .main) {
                 completion(result)
-                print("Finished all requests.")
+                print("Finished all requests in getAllMedia.")
             }
          }
      }
@@ -241,6 +241,34 @@ class InstagramApi {
              })
              task.resume()
          }
+     }
+
+    func getAllImages(_ mediaData: [InstagramMedia], completion: @escaping ([Data]) -> Void) {
+        var result = [Data]()
+        let myGroup = DispatchGroup()
+         for media in mediaData {
+             myGroup.enter()
+             if media.media_type != MediaType.VIDEO {
+                 let media_url = media.media_url
+                 self.fetchImage(urlString: media_url, completion: { (fetchedImage) in
+                     if let imageData = fetchedImage {
+                         result.append(imageData)
+                         print("Added image data to collection")
+                     } else {
+                         print("Didn't fetched the data")
+                     }
+                     myGroup.leave()
+                 })
+                 //print(media_url)
+             } else {
+                 print("Fetched media is a video")
+             }
+        }
+        myGroup.wait()
+        myGroup.notify(queue: .main) {
+            completion(result)
+            print("Finished all requests in getAllImages.")
+        }
      }
      
      func fetchImage(urlString: String, completion: @escaping (Data?) -> Void) {

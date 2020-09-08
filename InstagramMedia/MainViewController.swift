@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import PromiseKit
 
 class MainViewController: UIViewController,  UICollectionViewDelegateFlowLayout, UICollectionViewDataSource {
     
@@ -37,58 +38,32 @@ class MainViewController: UIViewController,  UICollectionViewDelegateFlowLayout,
     }
     
     @IBAction func fetchMedia(_ sender: UIButton) {
-        let myGroup = DispatchGroup()
         if self.instagramUser != nil {
             self.instagramApi.getAllMedia(testUserData: self.testUserData) { (mediaData) in
-                for media in mediaData {
-                    myGroup.enter()
-                    if media.media_type != MediaType.VIDEO {
-                        let media_url = media.media_url
-                        self.instagramApi.fetchImage(urlString: media_url, completion: { (fetchedImage) in
-                            if let imageData = fetchedImage {
-                                self.imageDatas.append(imageData)
-                                print("Added image data to collection")
-                            } else {
-                                print("Didn't fetched the data")
-                            }
-                        })
-                        //print(media_url)
-                    } else {
-                        print("Fetched media is a video")
-                    }
-                    myGroup.leave()
-                }
-
-                print("Fetcheced all media")
-                
-                self.collectionView?.reloadData()
-                OperationQueue.main.addOperation{
+                print("Fetcheced all media. Media Data Count = ", mediaData.count)
+                self.instagramApi.getAllImages(mediaData) { (data) in
+                    self.imageDatas = data
                     self.collectionView?.reloadData()
+                    print("Reload Data. Image Data Count = ", self.imageDatas.count)
+//                    OperationQueue.main.addOperation{
+//                        self.collectionView?.reloadData()
+//                    }
                 }
             }
-            self.collectionView?.reloadData()
         } else {
             print("Not signed in")
-        }
-        
-        myGroup.notify(queue: .main) {
-            self.collectionView?.reloadData()
-            print("Finished all requests.")
-        }
-        DispatchQueue.main.async {
-            self.collectionView?.reloadData()
         }
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        collectionView?.backgroundColor = UIColor.white
-        collectionView?.register(MediaCollectionViewCell.self, forCellWithReuseIdentifier: "cellId")
-        collectionView?.contentInset = UIEdgeInsets(top: 50, left: 0, bottom: self.view.frame.height, right: self.view.frame.width)
-        collectionView?.scrollIndicatorInsets = UIEdgeInsets(top: 50, left: 0, bottom: 0, right: self.view.frame.width)
-        collectionView?.dataSource = self
-        collectionView?.delegate = self
+//        collectionView.backgroundColor = UIColor.white
+//        collectionView.register(MediaCollectionViewCell.self, forCellWithReuseIdentifier: "cellId")
+        //collectionView.contentInset = UIEdgeInsets(top: 50, left: 0, bottom: self.view.frame.height, right: self.view.frame.width)
+        //collectionView.scrollIndicatorInsets = UIEdgeInsets(top: 50, left: 0, bottom: 0, right: self.view.frame.width)
+//        collectionView.dataSource = self
+//        collectionView.delegate = self
     }
     
     func presentAlert() {
@@ -106,11 +81,45 @@ class MainViewController: UIViewController,  UICollectionViewDelegateFlowLayout,
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cellId", for: indexPath) as! MediaCollectionViewCell
-        cell.backgroundColor = UIColor.black
-        cell.Image.image = UIImage(data: self.imageDatas[indexPath.row])
+//        cell.backgroundColor = UIColor.black
+//        cell.Image = UIImageView()
+//        cell.Image.backgroundColor = UIColor.purple
+        
+        if (imageDatas.count > indexPath.row)
+        {
+//            cell.Image.image = UIImage(data: self.imageDatas[indexPath.row])
+//            cell.Image.bounds = CGRect(x: 0, y: 0, width: 200 , height: 200)
+            
+            cell.Image.image = self.resizeImage(image: UIImage(data: self.imageDatas[indexPath.row])!, targetSize: CGSize(width: 200 , height: 200))
+        }
         return cell
+    }
+    
+    func resizeImage(image: UIImage, targetSize: CGSize) -> UIImage {
+        let size = image.size
+
+        let widthRatio  = targetSize.width  / size.width
+        let heightRatio = targetSize.height / size.height
+
+        // Figure out what our orientation is, and use that to form the rectangle
+        var newSize: CGSize
+        if(widthRatio > heightRatio) {
+            newSize = CGSize(width: size.width * heightRatio, height: size.height * heightRatio)
+        } else {
+            newSize = CGSize(width: size.width * widthRatio, height: size.height * widthRatio)
+        }
+
+        // This is the rect that we've calculated out and this is what is actually used below
+        let rect = CGRect(x: 0, y: 0, width: newSize.width, height: newSize.height)
+
+        // Actually do the resizing to the rect using the ImageContext stuff
+        UIGraphicsBeginImageContextWithOptions(newSize, false, 1.0)
+        image.draw(in: rect)
+        let newImage = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+
+        return newImage!
     }
      
     override func didReceiveMemoryWarning() {
@@ -127,6 +136,7 @@ class MainViewController: UIViewController,  UICollectionViewDelegateFlowLayout,
     
     private func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout,
                         sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
-        return CGSize(width: 100, height: 100)
+//        return CGSize(width: collectionView.frame.size.width/3 , height: collectionView.frame.size.width/3)
+        return CGSize(width: 200, height: 200)
     }
 }

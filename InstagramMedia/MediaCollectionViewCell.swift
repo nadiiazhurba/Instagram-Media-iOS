@@ -10,5 +10,5 @@ import UIKit
 
 class MediaCollectionViewCell: UICollectionViewCell {
     
-    @IBOutlet weak var Image: UIImageView!
+    @IBOutlet var Image: UIImageView!
 }
