@@ -14,9 +14,9 @@
             filePath = "InstagramMedia/MainViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "84"
-            endingLineNumber = "84"
-            landmarkName = "collectionView(_:cellForItemAt:)"
+            startingLineNumber = "74"
+            endingLineNumber = "74"
+            landmarkName = "presentWebViewController()"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

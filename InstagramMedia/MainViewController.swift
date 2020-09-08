@@ -45,9 +45,6 @@ class MainViewController: UIViewController,  UICollectionViewDelegateFlowLayout,
                     self.imageDatas = data
                     self.collectionView?.reloadData()
                     print("Reload Data. Image Data Count = ", self.imageDatas.count)
-//                    OperationQueue.main.addOperation{
-//                        self.collectionView?.reloadData()
-//                    }
                 }
             }
         } else {
@@ -57,13 +54,6 @@ class MainViewController: UIViewController,  UICollectionViewDelegateFlowLayout,
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-//        collectionView.backgroundColor = UIColor.white
-//        collectionView.register(MediaCollectionViewCell.self, forCellWithReuseIdentifier: "cellId")
-        //collectionView.contentInset = UIEdgeInsets(top: 50, left: 0, bottom: self.view.frame.height, right: self.view.frame.width)
-        //collectionView.scrollIndicatorInsets = UIEdgeInsets(top: 50, left: 0, bottom: 0, right: self.view.frame.width)
-//        collectionView.dataSource = self
-//        collectionView.delegate = self
     }
     
     func presentAlert() {
@@ -82,16 +72,11 @@ class MainViewController: UIViewController,  UICollectionViewDelegateFlowLayout,
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cellId", for: indexPath) as! MediaCollectionViewCell
-//        cell.backgroundColor = UIColor.black
-//        cell.Image = UIImageView()
-//        cell.Image.backgroundColor = UIColor.purple
         
         if (imageDatas.count > indexPath.row)
         {
-//            cell.Image.image = UIImage(data: self.imageDatas[indexPath.row])
-//            cell.Image.bounds = CGRect(x: 0, y: 0, width: 200 , height: 200)
-            
-            cell.Image.image = self.resizeImage(image: UIImage(data: self.imageDatas[indexPath.row])!, targetSize: CGSize(width: 200 , height: 200))
+            cell.Image.image = self.resizeImage(image: UIImage(data: self.imageDatas[indexPath.row])!, targetSize: CGSize(width: collectionView.frame.size.width/3 , height: collectionView.frame.size.width/3))
+            cell.Image.contentMode = UIView.ContentMode.scaleAspectFit
         }
         return cell
     }
@@ -102,18 +87,15 @@ class MainViewController: UIViewController,  UICollectionViewDelegateFlowLayout,
         let widthRatio  = targetSize.width  / size.width
         let heightRatio = targetSize.height / size.height
 
-        // Figure out what our orientation is, and use that to form the rectangle
         var newSize: CGSize
         if(widthRatio > heightRatio) {
             newSize = CGSize(width: size.width * heightRatio, height: size.height * heightRatio)
         } else {
             newSize = CGSize(width: size.width * widthRatio, height: size.height * widthRatio)
         }
-
-        // This is the rect that we've calculated out and this is what is actually used below
+        
         let rect = CGRect(x: 0, y: 0, width: newSize.width, height: newSize.height)
 
-        // Actually do the resizing to the rect using the ImageContext stuff
         UIGraphicsBeginImageContextWithOptions(newSize, false, 1.0)
         image.draw(in: rect)
         let newImage = UIGraphicsGetImageFromCurrentImageContext()
@@ -136,7 +118,6 @@ class MainViewController: UIViewController,  UICollectionViewDelegateFlowLayout,
     
     private func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout,
                         sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
-//        return CGSize(width: collectionView.frame.size.width/3 , height: collectionView.frame.size.width/3)
-        return CGSize(width: 200, height: 200)
+        return CGSize(width: collectionView.frame.size.width/3 , height: collectionView.frame.size.width/3)
     }
 }
